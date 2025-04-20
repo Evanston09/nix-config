@@ -60,7 +60,7 @@
         timeouts = [
             {
                 timeout = 300;
-                command = "${pkgs.swaylock}/bin/swaylock -f";
+                command = "${pkgs.swaylock}/bin/swaylock -f -i /home/evank/Downloads/wallpaper.tiff";
             }
             {
                 timeout = 360;
@@ -71,11 +71,12 @@
         events = [
             {
                 event = "before-sleep";
-                command = "${pkgs.swaylock}/bin/swaylock";
+                command = "${pkgs.swaylock}/bin/swaylock -f -i /home/evank/Downloads/wallpaper.tiff";
             }
         ];
     };
   
+  services.swaync.enable = true;
   wayland.windowManager.sway = {
     # Need this bc: https://github.com/nix-community/home-manager/issues/5311
     checkConfig = false;
@@ -108,7 +109,9 @@
 	  "XF86AudioLowerVolume" = "exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'";
 	  "XF86AudioMute" = "exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'";
 
-       "${modifier}+l" = "exec 'systemctl suspend'";
+       "${modifier}+end" = "exec 'systemctl suspend'";
+                    
+       "${modifier}+shift+n" = "exec 'swaync-client -t -sw'";
       };
       menu = "bemenu-run";
     };
@@ -236,22 +239,22 @@
         {
           key = "<leader>p";
           mode = "x";
-          action = "[[\"_dP]]";
+          action = "\"_dP";
         }
         {
           key = "<leader>y";
           mode = ["n" "v"];
-          action = "[[\"+y]]";
+          action = "\"+y";
         }
         {
           key = "<leader>Y";
           mode = "n";
-          action = "[[\"+Y]]";
+          action = "\"+Y";
         }
         {
           key = "<leader>d";
           mode = ["n" "v"];
-          action = "[[\"_d]]";
+          action = "\"_d";
         }
 
         {
