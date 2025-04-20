@@ -31,7 +31,7 @@
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
                     home-manager.sharedModules = [nvf.homeManagerModules.default];
-                    home-manager.users.evank = ./home.nix;
+                    home-manager.users.evank = ./home;
                 }
             ];
         };
