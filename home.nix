@@ -31,6 +31,7 @@
     pkgs.bemenu
     pkgs.zsh-powerlevel10k
     pkgs.localsend
+    pkgs.discord
   ];
 
     programs.i3status = {
