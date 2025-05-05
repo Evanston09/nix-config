@@ -13,6 +13,15 @@
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];  
   boot.kernelPackages = pkgs.linuxPackages_latest; 
+  
+  # For printers
+  services.printing.enable = true;
+  services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+  };
+
 
   # Needed for sway
   security.polkit.enable = true;
