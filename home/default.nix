@@ -32,10 +32,18 @@
         pkgs.zsh-powerlevel10k
         pkgs.localsend
         pkgs.discord
+        pkgs.gcc
+        pkgs.android-studio
+        pkgs.android-tools
+        pkgs.bambu-studio
+        pkgs.kdePackages.kleopatra
     ];
+    services.kdeconnect.enable = true;
+    services.mpris-proxy.enable = true;
 
     imports = [
         ./sway
+        ./niri
         ./nvim
     ];
 
@@ -58,7 +66,7 @@
             src = pkgs.zsh-powerlevel10k;
             file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
         }];
-        initExtra = "source ~/.p10k.zsh";
+        initContent = "source ~/.p10k.zsh";
     };
 
     programs.direnv = {

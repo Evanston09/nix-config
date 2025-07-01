@@ -13,7 +13,26 @@
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];  
   boot.kernelPackages = pkgs.linuxPackages_latest; 
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  services.udisks2.enable = true;
+  # Docker
+    virtualisation.docker = {
+        enable = true;
+    };
   
+    # FOr kdeconnect
+    networking.firewall = { 
+        enable = true;
+        allowedTCPPorts = [ 5555 37099 ];
+        allowedTCPPortRanges = [ 
+            { from = 1714; to = 1764; } # KDE Connect
+        ];  
+        allowedUDPPortRanges = [ 
+            { from = 1714; to = 1764; } # KDE Connect
+        ];  
+    };
+
   # For printers
   services.printing.enable = true;
   services.avahi = {
@@ -37,6 +56,15 @@
       };
     };
   };
+
+    # Screensharing
+    xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+        config = {
+            common.default = "wlr";
+        };
+    };
   
   # Add shell (cant be done in just home manager)
   programs.zsh.enable = true;
@@ -106,7 +134,7 @@
   users.users.evank = {
     isNormalUser = true;
     description = "Evan Kim";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "docker" ];
     packages = with pkgs; [];
     shell =  pkgs.zsh;
   };

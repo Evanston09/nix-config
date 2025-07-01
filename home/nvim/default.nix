@@ -131,9 +131,13 @@
         lua.enable = true;
         nix.enable = true;
         astro.enable = true;
+        clang.enable = true;
         ts.enable = true;
         html.enable = true;
         css.enable = true;
+        python.enable = true;
+        typst.enable = true;
+        go.enable = true;
       };
     };
   };

@@ -15,6 +15,7 @@
                     dwt = "enabled";
                     tap = "enabled";
                     middle_emulation = "enabled";
+                    natural_scroll = "enabled";
                 };
             };
             output = {
