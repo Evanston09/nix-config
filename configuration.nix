@@ -12,7 +12,9 @@
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];  
-  boot.kernelPackages = pkgs.linuxPackages_latest; 
+  # Breaks ghostty
+  # https://github.com/ghostty-org/ghostty/discussions/7720
+  # boot.kernelPackages = pkgs.linuxPackages_latest; 
   boot.supportedFilesystems = [ "ntfs" ];
 
   services.udisks2.enable = true;
@@ -46,12 +48,12 @@
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
   hardware.graphics.enable = true;
-  programs.light.enable = true;
+  # programs.light.enable = true;
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
         user = "evank";
       };
     };
