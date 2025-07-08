@@ -20,21 +20,26 @@
             # Optional but recommended to limit the size of your system closure.
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        stylix = {
+            url = "github:danth/stylix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
         niri.url = "github:sodiboo/niri-flake";
     };
 
-    outputs = { self, nixpkgs, home-manager, nvf, lanzaboote , niri }: {
+    outputs = { self, nixpkgs, home-manager, lanzaboote, ...}@inputs: {
         nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-                lanzaboote.nixosModules.lanzaboote
                 ./configuration.nix
+                lanzaboote.nixosModules.lanzaboote
                 home-manager.nixosModules.home-manager
                 {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    home-manager.sharedModules = [nvf.homeManagerModules.default niri.homeModules.niri];
                     home-manager.users.evank = ./home;
+                    home-manager.extraSpecialArgs = {inherit inputs;};
                 }
             ];
         };

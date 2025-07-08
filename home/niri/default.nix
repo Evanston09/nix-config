@@ -2,17 +2,42 @@
 {
 
     home.packages = [
-        pkgs.alacritty
         pkgs.fuzzel
-        pkgs.nerd-fonts.jetbrains-mono
         pkgs.font-awesome
+        pkgs.xwayland-satellite
+        pkgs.swaybg
     ];
+
+    programs.tofi = {
+        enable = true;
+        settings = {
+            anchor = "top";
+            width = "100%";
+            height = 20;
+            horizontal = true;
+            prompt-text = " run: ";
+            min-input-width = 120;
+            result-spacing = 15;
+            padding-top = 0;
+            padding-bottom = 0;
+            padding-left = 0;
+            padding-right = 0;
+            border-width = 0;
+            outline-width = 0;
+        };
+    };
+
     programs.niri = {
         enable = true;
         settings = {
+            environment = {
+                DISPLAY = ":0";
+            };
             input.touchpad.dwt = true;
             spawn-at-startup = [
                 { command = ["waybar"]; }
+                { command = ["xwayland-satellite"]; }
+                { command = ["swaybg" "--image" "/home/evank/nixos/home/wallpaper.tiff"]; }
             ];
             layout.default-column-width = { proportion = .5; };
             binds = {
@@ -25,8 +50,8 @@
                     action.spawn = "ghostty";
                 };
                 "Mod+D" = {
-                    hotkey-overlay.title = "Run an Application: fuzzel";
-                    action.spawn = "fuzzel";
+                    hotkey-overlay.title = "Run an Application: tofi";
+                    action.spawn = ["tofi-drun" "--drun-launch=true"];
                 };
                 "Super+Alt+L" = {
                     hotkey-overlay.title = "Lock the Screen: swaylock";
@@ -219,23 +244,24 @@
                     ];
                     open-floating = true;
                 }
+                {
+                    geometry-corner-radius = {
+                        bottom-left = 12.0;
+                        bottom-right = 12.0;
+                        top-left = 12.0;
+                        top-right = 12.0;
+
+                    };
+                    clip-to-geometry = true;
+                }
             ];
         };
     };
     programs.waybar  = {
         enable = true;
         style = ''
-          * {
-            font-family: JetBrainsMono Nerd Font;
-            font-size: 14px;
-          }
           window#waybar {
               background-color: transparent;
-        }
-
-        #workspaces button {
-         color: gray;
-         background: transparent;
         }
 
         #clock,
@@ -303,7 +329,7 @@
                     };
                     format = "{capacity}% {icon}";
                     format-full = "{capacity}% {icon}";
-                    format-charging = "{capacity}% ";
+                    format-charging = "{capacity}% ";
                     format-plugged = "{capacity}% ";
                     format-alt = "{time} {icon}";
                     format-icons = [ "" "" "" "" "" ];

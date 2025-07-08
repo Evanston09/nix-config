@@ -1,25 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
     home.username = "evank";
     home.homeDirectory = "/home/evank";
-
-    home.pointerCursor = {
-        name = "Adwaita";
-        package = pkgs.adwaita-icon-theme;
-        size = 24;
-    };
-    gtk = {
-        enable = true;
-
-        gtk3.extraConfig = {
-            "gtk-application-prefer-dark-theme" = "1";
-        };
-
-        gtk4.extraConfig = {
-            "gtk-application-prefer-dark-theme" = "1";
-        };
-    };
 
     home.packages = [
         pkgs.pavucontrol
@@ -37,23 +20,43 @@
         pkgs.android-tools
         pkgs.bambu-studio
         pkgs.kdePackages.kleopatra
+        pkgs.dconf
     ];
     services.kdeconnect.enable = true;
     services.mpris-proxy.enable = true;
 
     imports = [
+        inputs.niri.homeModules.niri
+        inputs.niri.homeModules.stylix
+        inputs.nvf.homeManagerModules.default
+        inputs.stylix.homeModules.stylix
         ./sway
         ./niri
         ./nvim
     ];
+    # Stylix
+    stylix = {
+        enable = true;
+        # I dont want it to touch neovim
+        targets.nvf.enable = false;
+        fonts = {
+            monospace = {
+                package = pkgs.nerd-fonts.jetbrains-mono;
+                name = "JetBrainsMono Nerd Font";
+            };
+            sansSerif = {
+                package = pkgs.roboto;
+                name = "Roboto";
+            };
+            serif = config.stylix.fonts.sansSerif;
+            emoji = config.stylix.fonts.sansSerif;
+        };
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    };
+
 
     programs.ghostty = {
         enable = true;
-        settings = {
-            theme = "catppuccin-mocha";
-            font-size = 12;
-            background-opacity = .8;
-        };
     };
 
     programs.zsh = {
@@ -86,7 +89,6 @@
         extraConfig = "
       bind '\\' split-window -h
       bind - split-window -v
-      set -g status-style bg=default
             ";
     };
 
@@ -101,7 +103,6 @@
     programs.zoxide.enable = true;
 
     programs.lazygit.enable = true;
-
 
     home.stateVersion = "25.05";
 }

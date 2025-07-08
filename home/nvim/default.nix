@@ -110,6 +110,7 @@
         style = "mocha";
         transparent = true;
       };
+
       visuals.nvim-web-devicons.enable = true;
       autocomplete.blink-cmp = {
         enable = true;
@@ -123,9 +124,10 @@
         enable = true;
         config.virtual_text = true;
       };
+
      
+      lsp.enable = true;
       languages = {
-        enableLSP = true;
         enableTreesitter = true;
 
         lua.enable = true;

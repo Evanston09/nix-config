@@ -44,30 +44,9 @@
   };
 
 
-  # Needed for sway
-  security.polkit.enable = true;
   security.pam.services.swaylock = {};
   hardware.graphics.enable = true;
-  # programs.light.enable = true;
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
-        user = "evank";
-      };
-    };
-  };
 
-    # Screensharing
-    xdg.portal = {
-        enable = true;
-        wlr.enable = true;
-        config = {
-            common.default = "wlr";
-        };
-    };
-  
   # Add shell (cant be done in just home manager)
   programs.zsh.enable = true;
 
