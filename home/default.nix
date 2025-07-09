@@ -50,7 +50,7 @@
                 name = "Roboto";
             };
             serif = config.stylix.fonts.sansSerif;
-            emoji = config.stylix.fonts.sansSerif;
+            emoji = config.stylix.fonts.monospace;
         };
         cursor = {
             name = "Adwaita";

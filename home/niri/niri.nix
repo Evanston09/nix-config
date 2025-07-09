@@ -3,6 +3,7 @@
 
     home.packages = [
         pkgs.xwayland-satellite
+        pkgs.brightnessctl
         pkgs.swaybg
     ];
 
@@ -53,6 +54,16 @@
                 "XF86AudioMicMute" = {
                     allow-when-locked = true;
                     action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
+                };
+
+                # Brightness
+                "XF86MonBrightnessDown" = {
+                    allow-when-locked = true;
+                    action.spawn = [ "brightnessctl" "set" "25-" ];
+                };
+                "XF86MonBrightnessUp" = {
+                    allow-when-locked = true;
+                    action.spawn = [ "brightnessctl" "set" "25+" ];
                 };
 
                 # Overview
