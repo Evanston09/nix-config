@@ -16,7 +16,7 @@
             spawn-at-startup = [
                 { command = ["waybar"]; }
                 { command = ["xwayland-satellite"]; }
-                { command = ["swaybg" "--image" "/home/evank/nixos/home/wallpaper.tiff"]; }
+                { command = ["swaybg" "--image" "/home/evank/nixos/home/wallpaper.png"]; }
             ];
             layout.default-column-width = { proportion = .5; };
             binds = {

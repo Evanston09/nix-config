@@ -36,8 +36,10 @@
     # Stylix
     stylix = {
         enable = true;
+        image = ./wallpaper.png;
         # I dont want it to touch neovim
         targets.nvf.enable = false;
+        targets.hyprlock.useWallpaper = true;
         fonts = {
             monospace = {
                 package = pkgs.nerd-fonts.jetbrains-mono;

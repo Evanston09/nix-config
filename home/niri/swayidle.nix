@@ -9,8 +9,8 @@
             }
             {
                 timeout = 360;
-                command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
-                resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+                command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+                # resumeCommand = "${pkgs.niri}/bin/swaymsg 'output * power on'";
             }
         ];
         events = [
