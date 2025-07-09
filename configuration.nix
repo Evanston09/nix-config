@@ -2,49 +2,66 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Experimental features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];  
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   # Breaks ghostty
   # https://github.com/ghostty-org/ghostty/discussions/7720
-  # boot.kernelPackages = pkgs.linuxPackages_latest; 
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.supportedFilesystems = [ "ntfs" ];
 
   services.udisks2.enable = true;
   # Docker
-    virtualisation.docker = {
-        enable = true;
-    };
-  
-    # FOr kdeconnect
-    networking.firewall = { 
-        enable = true;
-        allowedTCPPorts = [ 5555 37099 ];
-        allowedTCPPortRanges = [ 
-            { from = 1714; to = 1764; } # KDE Connect
-        ];  
-        allowedUDPPortRanges = [ 
-            { from = 1714; to = 1764; } # KDE Connect
-        ];  
-    };
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  # FOr kdeconnect
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      5555
+      37099
+    ];
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+  };
 
   # For printers
   services.printing.enable = true;
   services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
   # Some basic Niri stuff
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
   hardware.graphics.enable = true;
 
   # Add shell (cant be done in just home manager)
@@ -60,9 +77,9 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
- };
-  
-  # Bluetooth stuff 
+  };
+
+  # Bluetooth stuff
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
@@ -70,12 +87,12 @@
   # boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Try to get secureboot to work           
-    boot.loader.systemd-boot.enable = lib.mkForce false;
-    boot.lanzaboote = {
-        enable = true;
-        pkiBundle = "/var/lib/sbctl";
-    };
+  # Try to get secureboot to work
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   networking.hostName = "zenbook"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -115,9 +132,14 @@
   users.users.evank = {
     isNormalUser = true;
     description = "Evan Kim";
-    extraGroups = [ "networkmanager" "wheel" "video" "docker" ];
-    packages = with pkgs; [];
-    shell =  pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "docker"
+    ];
+    packages = with pkgs; [ ];
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
@@ -129,7 +151,7 @@
     sbctl
     pulseaudio
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

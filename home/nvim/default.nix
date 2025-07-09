@@ -6,52 +6,52 @@
     settings.vim = {
       options = {
         scrolloff = 8;
-        
+
         tabstop = 4;
         expandtab = true;
         softtabstop = 4;
         shiftwidth = 4;
-       
+
         updatetime = 50;
       };
       keymaps = [
-       {
-         key = "<leader>ff";
-         mode = "n";
-         lua = true;
-         action = "function()
+        {
+          key = "<leader>ff";
+          mode = "n";
+          lua = true;
+          action = "function()
            require('fzf-lua').files()
          end";
         }
         {
-         key = "<leader>fs";
-         mode = "n";
-         lua = true;
-         action = "function()
+          key = "<leader>fs";
+          mode = "n";
+          lua = true;
+          action = "function()
            require('fzf-lua').live_grep()
          end";
         }
         {
-         key = "<C-p>";
-         mode = "n";
-         lua = true;
-         action = "function()
+          key = "<C-p>";
+          mode = "n";
+          lua = true;
+          action = "function()
            require('fzf-lua').git_files()
          end";
         }
         {
-         key = "<leader>fb";
-         mode = "n";
-         lua = true;
-         action = "function()
+          key = "<leader>fb";
+          mode = "n";
+          lua = true;
+          action = "function()
            require('fzf-lua').buffers()
          end";
         }
         {
-         key = "<leader>vh";
-         mode = "n";
-         lua = true;
-         action = "function()
+          key = "<leader>vh";
+          mode = "n";
+          lua = true;
+          action = "function()
            require('fzf-lua').helptags()
          end";
         }
@@ -69,7 +69,10 @@
         }
         {
           key = "<leader>y";
-          mode = ["n" "v"];
+          mode = [
+            "n"
+            "v"
+          ];
           action = "\"+y";
         }
         {
@@ -79,7 +82,10 @@
         }
         {
           key = "<leader>d";
-          mode = ["n" "v"];
+          mode = [
+            "n"
+            "v"
+          ];
           action = "\"_d";
         }
 
@@ -115,7 +121,9 @@
       autocomplete.blink-cmp = {
         enable = true;
         setupOpts = {
-          signature = {enabled=true;};
+          signature = {
+            enabled = true;
+          };
           keymap.preset = "default";
         };
       };
@@ -125,7 +133,6 @@
         config.virtual_text = true;
       };
 
-     
       lsp.enable = true;
       languages = {
         enableTreesitter = true;
