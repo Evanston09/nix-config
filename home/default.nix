@@ -30,7 +30,6 @@
         inputs.niri.homeModules.stylix
         inputs.nvf.homeManagerModules.default
         inputs.stylix.homeModules.stylix
-        ./sway
         ./niri
         ./nvim
     ];
@@ -50,6 +49,11 @@
             };
             serif = config.stylix.fonts.sansSerif;
             emoji = config.stylix.fonts.sansSerif;
+        };
+        cursor = {
+            name = "Adwaita";
+            package = pkgs.adwaita-icon-theme;
+            size = 24;
         };
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     };

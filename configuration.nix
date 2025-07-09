@@ -43,7 +43,7 @@
       openFirewall = true;
   };
 
-
+  # Some basic Niri stuff
   security.pam.services.swaylock = {};
   hardware.graphics.enable = true;
 
