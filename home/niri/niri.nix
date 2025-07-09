@@ -233,6 +233,14 @@
                     };
                     clip-to-geometry = true;
                 }
+                {
+                    matches = [
+                        {
+                            app-id = "com.mitchellh.ghostty";
+                        }
+                    ];
+                    draw-border-with-background = false;
+                }
             ];
         };
     };

@@ -45,7 +45,6 @@
 
   # Some basic Niri stuff
   security.pam.services.swaylock = {};
-  security.pam.services.hyprlock = {};
   hardware.graphics.enable = true;
 
   # Add shell (cant be done in just home manager)

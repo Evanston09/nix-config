@@ -33,13 +33,13 @@
         ./niri
         ./nvim
     ];
+
     # Stylix
     stylix = {
         enable = true;
-        image = ./wallpaper.png;
         # I dont want it to touch neovim
         targets.nvf.enable = false;
-        targets.hyprlock.useWallpaper = true;
+        opacity.terminal = .8;
         fonts = {
             monospace = {
                 package = pkgs.nerd-fonts.jetbrains-mono;
@@ -63,6 +63,9 @@
 
     programs.ghostty = {
         enable = true;
+        settings = {
+            window-decoration = "none";
+        };
     };
 
     programs.zsh = {
