@@ -1,15 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -23,7 +20,7 @@
   # Breaks ghostty
   # https://github.com/ghostty-org/ghostty/discussions/7720
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = ["ntfs"];
 
   services.udisks2.enable = true;
   # Docker
@@ -33,7 +30,7 @@
 
   # FOr kdeconnect
   networking.firewall = {
-    enable = true;
+    enable = false;
     allowedTCPPorts = [
       5555
       37099
@@ -61,7 +58,7 @@
   };
 
   # Some basic Niri stuff
-  security.pam.services.swaylock = { };
+  security.pam.services.swaylock = {};
   hardware.graphics.enable = true;
 
   # Add shell (cant be done in just home manager)
@@ -138,7 +135,7 @@
       "video"
       "docker"
     ];
-    packages = with pkgs; [ ];
+    packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 

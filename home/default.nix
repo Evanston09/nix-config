@@ -16,7 +16,7 @@
     pkgs.slurp
     pkgs.blueman
     pkgs.firefox
-    pkgs.neofetch
+    pkgs.fastfetch
     pkgs.bemenu
     pkgs.zsh-powerlevel10k
     pkgs.localsend
@@ -28,9 +28,16 @@
     pkgs.kdePackages.kleopatra
     pkgs.dconf
     pkgs.nixfmt-tree
+    pkgs.nodejs
+    pkgs.youtube-music
+    pkgs.bruno
+    pkgs.timer
+    pkgs.xfce.thunar
+    pkgs.calibre
   ];
   services.kdeconnect.enable = true;
   services.mpris-proxy.enable = true;
+  programs.chromium.enable = true;
 
   imports = [
     inputs.niri.homeModules.niri
@@ -86,7 +93,27 @@
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
     ];
-    initContent = "source ~/.p10k.zsh";
+    initContent = ''
+    source ~/.p10k.zsh
+
+    # Pomodoro timer function thanks to bashbunni
+    declare -A pomo_options
+    pomo_options["work"]="45"
+    pomo_options["break"]="10"
+
+    pomodoro () {
+      if [ -n "$1" ] && [ -n "''${pomo_options["$1"]}" ]; then
+        val=$1
+        echo $val
+        timer "''${pomo_options["$val"]}m"
+      fi
+    }
+    '';
+
+    shellAliases = {
+        wo = "pomodoro work";
+        br = "pomodoro break";
+    };
   };
 
   programs.direnv = {

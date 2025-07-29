@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.nvf = {
     enable = true;
 
@@ -14,6 +17,7 @@
 
         updatetime = 50;
       };
+
       keymaps = [
         {
           key = "<leader>ff";
@@ -55,6 +59,14 @@
            require('fzf-lua').helptags()
          end";
         }
+        {
+          key = "<leader>cf";
+          mode = "n";
+          lua = true;
+          action = "function()
+           require('conform').format()
+         end";
+        }
 
         {
           key = "-";
@@ -88,28 +100,22 @@
           ];
           action = "\"_d";
         }
-
-        {
-          key = "<C-d>";
-          mode = "n";
-          action = "<C-d>zz";
-        }
-        {
-          key = "<C-u>";
-          mode = "n";
-          action = "<C-u>zz";
-        }
       ];
+
       utility.oil-nvim.enable = true;
+      navigation.harpoon.enable = true;
+      formatter.conform-nvim.enable = true;
+      presence.neocord.enable = true;
+
       fzf-lua.enable = true;
       mini = {
-        ai.enable = true;
-        comment.enable = true;
+        # ai.enable = true;
         pairs.enable = true;
         move.enable = true;
         surround.enable = true;
         splitjoin.enable = true;
       };
+
       theme = {
         enable = true;
         name = "catppuccin";
@@ -134,19 +140,30 @@
       };
 
       lsp.enable = true;
+
+      # Clashes with new rename keybind (grn) in neovim lsp
+      treesitter.mappings.incrementalSelection.incrementByNode = "gr,";
+
       languages = {
         enableTreesitter = true;
+        enableFormat = true;
 
         lua.enable = true;
         nix.enable = true;
         astro.enable = true;
         clang.enable = true;
-        ts.enable = true;
+        ts = {
+          enable = true;
+        };
         html.enable = true;
         css.enable = true;
         python.enable = true;
         typst.enable = true;
         go.enable = true;
+      };
+      binds = {
+        hardtime-nvim.enable = true;
+        whichKey.enable = true;
       };
     };
   };
