@@ -269,6 +269,7 @@
       overview = {
         backdrop-color = "transparent";
       };
+      animations.enable = false;
 
       window-rules = [
         {

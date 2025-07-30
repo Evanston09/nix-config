@@ -1,170 +1,153 @@
 {
-  config,
-  pkgs,
-  ...
+config,
+pkgs,
+...
 }: {
-  programs.nvf = {
+    programs.nixvim = {
+
     enable = true;
+       globals.mapleader = " ";
 
-    settings.vim = {
-      options = {
-        scrolloff = 8;
 
-        tabstop = 4;
-        expandtab = true;
-        softtabstop = 4;
-        shiftwidth = 4;
+        opts = {
+            number = true;
+            relativenumber = true;
 
-        updatetime = 50;
-      };
+            scrolloff = 8;
+            tabstop = 4;
+            expandtab = true;
+            softtabstop = 4;
+            shiftwidth = 4;
 
-      keymaps = [
-        {
-          key = "<leader>ff";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('fzf-lua').files()
-         end";
-        }
-        {
-          key = "<leader>fs";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('fzf-lua').live_grep()
-         end";
-        }
-        {
-          key = "<C-p>";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('fzf-lua').git_files()
-         end";
-        }
-        {
-          key = "<leader>fb";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('fzf-lua').buffers()
-         end";
-        }
-        {
-          key = "<leader>vh";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('fzf-lua').helptags()
-         end";
-        }
-        {
-          key = "<leader>cf";
-          mode = "n";
-          lua = true;
-          action = "function()
-           require('conform').format()
-         end";
-        }
+            signcolumn = "yes";
+            winborder = "rounded";
 
-        {
-          key = "-";
-          mode = "n";
-          action = "<CMD>Oil<CR>";
-        }
-
-        {
-          key = "<leader>p";
-          mode = "x";
-          action = "\"_dP";
-        }
-        {
-          key = "<leader>y";
-          mode = [
-            "n"
-            "v"
-          ];
-          action = "\"+y";
-        }
-        {
-          key = "<leader>Y";
-          mode = "n";
-          action = "\"+Y";
-        }
-        {
-          key = "<leader>d";
-          mode = [
-            "n"
-            "v"
-          ];
-          action = "\"_d";
-        }
-      ];
-
-      utility.oil-nvim.enable = true;
-      navigation.harpoon.enable = true;
-      formatter.conform-nvim.enable = true;
-      presence.neocord.enable = true;
-
-      fzf-lua.enable = true;
-      mini = {
-        # ai.enable = true;
-        pairs.enable = true;
-        move.enable = true;
-        surround.enable = true;
-        splitjoin.enable = true;
-      };
-
-      theme = {
-        enable = true;
-        name = "catppuccin";
-        style = "mocha";
-        transparent = true;
-      };
-
-      visuals.nvim-web-devicons.enable = true;
-      autocomplete.blink-cmp = {
-        enable = true;
-        setupOpts = {
-          signature = {
-            enabled = true;
-          };
-          keymap.preset = "default";
+            updatetime = 50;
         };
-      };
+        keymaps = [
+            {
+                action = ":Oil<CR>";
+                key = "-";
+            }
+            {
+                key = "<leader>cf";
+                action.__raw = "function() require('conform').format() end";
+            }
 
-      diagnostics = {
-        enable = true;
-        config.virtual_text = true;
-      };
+            {
+                key = "<leader>p";
+                mode = "x";
+                action = "\"_dP";
+            }
+            {
+                key = "<leader>y";
+                mode = [
+                    "n"
+                    "v"
+                ];
+                action = "\"+y";
+            }
+            {
+                key = "<leader>Y";
+                mode = "n";
+                action = "\"+Y";
+            }
+            {
+                key = "<leader>d";
+                mode = [
+                    "n"
+                    "v"
+                ];
+                action = "\"_d";
+            }
+            {
 
-      lsp.enable = true;
+                key="J";
+                mode = "v";
+                action=":m '>+1<CR>gv=gv";
+            }
+            {
 
-      # Clashes with new rename keybind (grn) in neovim lsp
-      treesitter.mappings.incrementalSelection.incrementByNode = "gr,";
+                key="K";
+                mode = "v";
+                action=":m '<-2<CR>gv=gv";
+            }
+            
+        ];
 
-      languages = {
-        enableTreesitter = true;
-        enableFormat = true;
 
-        lua.enable = true;
-        nix.enable = true;
-        astro.enable = true;
-        clang.enable = true;
-        ts = {
-          enable = true;
+        colorschemes.catppuccin = {
+            enable = true;
+            settings.transparent_background = true;
         };
-        html.enable = true;
-        css.enable = true;
-        python.enable = true;
-        typst.enable = true;
-        go.enable = true;
-      };
-      binds = {
-        hardtime-nvim.enable = true;
-        whichKey.enable = true;
-      };
+
+        plugins = {
+            lsp = {
+                enable = true;
+                servers= {
+                    ts_ls.enable = true;
+                    nixd.enable = true;
+                };
+                keymaps.lspBuf = {
+                    K = "hover";
+                    gD = "references";
+                    gd = "definition";
+                    gi = "implementation";
+                    gt = "type_definition";
+                };
+
+            };
+            blink-cmp = {
+                enable = true;
+                settings.signature.enabled = true;
+            };
+            treesitter = {
+                enable = true;
+                settings = {
+                    auto_install = true;
+                    # ensure_installed = "all";
+                    highlight.enable = true;
+                    indent.enable = true;
+                };
+            };
+            conform-nvim = {
+                enable = true;
+                settings = {
+                    formatters_by_ft = {
+                        javascript = ["prettier"];
+                        typescript = ["prettier"];
+                    };
+                };
+            };
+            nvim-autopairs.enable = true;
+            # Still deciding if I like this
+            smear-cursor = {
+                enable = true;
+                settings =  {                                
+                    stiffness = 0.8;
+                    trailing_stiffness = 0.5;
+                    stiffness_insert_mode = 0.7;
+                    trailing_stiffness_insert_mode = 0.7; 
+                    damping = 0.8;                       
+                    damping_insert_mode = 0.8;
+                    distance_stop_animating = 0.5;
+                };
+            };
+            web-devicons.enable = true;
+            fzf-lua = {
+                enable = true;
+                keymaps = {
+                    "<leader>ff" = "files";
+                    "<leader>fs" = "live_grep";
+                    "<leader>fb" = "buffers";
+                    "<leader>vh" = "helptags";
+                    "<C-p>" = "git_files";
+                };
+            };
+            which-key.enable = true;
+            oil.enable = true;
+            hardtime.enable = true;
+        };
+
     };
-  };
 }

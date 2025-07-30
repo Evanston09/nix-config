@@ -42,7 +42,7 @@
   imports = [
     inputs.niri.homeModules.niri
     inputs.niri.homeModules.stylix
-    inputs.nvf.homeManagerModules.default
+    inputs.nixvim.homeModules.nixvim
     inputs.stylix.homeModules.stylix
     ./niri
     ./nvim
@@ -52,7 +52,7 @@
   stylix = {
     enable = true;
     # I dont want it to touch neovim
-    targets.nvf.enable = false;
+    targets.nixvim.enable = false;
     opacity.terminal = .8;
     fonts = {
       monospace = {

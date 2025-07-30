@@ -7,11 +7,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvf = {
-      url = "github:notashelf/nvf";
-      # You can override the input nixpkgs to follow your system's
-      # instance of nixpkgs. This is safe to do as nvf does not depend
-      # on a binary cache.
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
@@ -28,29 +26,26 @@
     niri.url = "github:sodiboo/niri-flake";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      lanzaboote,
-      ...
-    }@inputs:
-    {
-      nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-          lanzaboote.nixosModules.lanzaboote
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.evank = ./home;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
-        ];
-      };
-
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    lanzaboote,
+    ...
+  } @ inputs: {
+    nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./configuration.nix
+        lanzaboote.nixosModules.lanzaboote
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.evank = ./home;
+          home-manager.extraSpecialArgs = {inherit inputs;};
+        }
+      ];
     };
+  };
 }
