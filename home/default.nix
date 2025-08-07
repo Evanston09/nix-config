@@ -24,7 +24,7 @@
     pkgs.gcc
     pkgs.android-studio
     pkgs.android-tools
-    pkgs.bambu-studio
+    # pkgs.bambu-studio
     pkgs.kdePackages.kleopatra
     pkgs.dconf
     pkgs.nixfmt-tree
@@ -38,41 +38,44 @@
   services.kdeconnect.enable = true;
   services.mpris-proxy.enable = true;
   programs.chromium.enable = true;
+  programs.zen-browser.enable = true;
 
   imports = [
     inputs.niri.homeModules.niri
     inputs.niri.homeModules.stylix
     inputs.nixvim.homeModules.nixvim
     inputs.stylix.homeModules.stylix
+    inputs.zen-browser.homeModules.beta
     ./niri
     ./nvim
   ];
 
   # Stylix
-  stylix = {
-    enable = true;
-    # I dont want it to touch neovim
-    targets.nixvim.enable = false;
-    opacity.terminal = .8;
-    fonts = {
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font";
-      };
-      sansSerif = {
-        package = pkgs.roboto;
-        name = "Roboto";
-      };
-      serif = config.stylix.fonts.sansSerif;
-      emoji = config.stylix.fonts.monospace;
+    stylix = {
+        enable = true;
+        targets.nixvim.enable = false;
+        targets.gnome.enable = true;
+        targets.zen-browser.profileNames = ["default"];
+        opacity.terminal = 0.8;
+        fonts = {
+            monospace = {
+                package = pkgs.nerd-fonts.jetbrains-mono;
+                name = "JetBrainsMono Nerd Font";
+            };
+            sansSerif = {
+                package = pkgs.roboto;
+                name = "Roboto";
+            };
+            serif = config.stylix.fonts.sansSerif;
+            emoji = config.stylix.fonts.monospace;
+        };
+        cursor = {
+            name = "Adwaita";
+            package = pkgs.adwaita-icon-theme;
+            size = 24;
+        };
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     };
-    cursor = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-      size = 24;
-    };
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  };
 
   programs.ghostty = {
     enable = true;
@@ -94,25 +97,25 @@
       }
     ];
     initContent = ''
-    source ~/.p10k.zsh
+      source ~/.p10k.zsh
 
-    # Pomodoro timer function thanks to bashbunni
-    declare -A pomo_options
-    pomo_options["work"]="45"
-    pomo_options["break"]="10"
+      # Pomodoro timer function thanks to bashbunni
+      declare -A pomo_options
+      pomo_options["work"]="45"
+      pomo_options["break"]="10"
 
-    pomodoro () {
-      if [ -n "$1" ] && [ -n "''${pomo_options["$1"]}" ]; then
-        val=$1
-        echo $val
-        timer "''${pomo_options["$val"]}m"
-      fi
-    }
+      pomodoro () {
+        if [ -n "$1" ] && [ -n "''${pomo_options["$1"]}" ]; then
+          val=$1
+          echo $val
+          timer "''${pomo_options["$val"]}m"
+        fi
+      }
     '';
 
     shellAliases = {
-        wo = "pomodoro work";
-        br = "pomodoro break";
+      wo = "pomodoro work";
+      br = "pomodoro break";
     };
   };
 

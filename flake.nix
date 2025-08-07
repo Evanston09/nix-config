@@ -24,28 +24,37 @@
     };
 
     niri.url = "github:sodiboo/niri-flake";
-  };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    lanzaboote,
-    ...
-  } @ inputs: {
-    nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        lanzaboote.nixosModules.lanzaboote
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.evank = ./home;
-          home-manager.extraSpecialArgs = {inherit inputs;};
-        }
-      ];
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
+      # to have it up-to-date or simply don't specify the nixpkgs input
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      lanzaboote,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.zenbook = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./configuration.nix
+          lanzaboote.nixosModules.lanzaboote
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.evank = ./home;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
+      };
+    };
 }

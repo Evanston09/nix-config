@@ -6,7 +6,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -17,11 +18,23 @@
     "nix-command"
     "flakes"
   ];
-  # Breaks ghostty
-  # https://github.com/ghostty-org/ghostty/discussions/7720
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = ["ntfs"];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.supportedFilesystems = [ "ntfs" ];
+
+
+  # THis messes with the theming of certain applications ive tried EVERYTHING
+  xdg.portal = {
+      enable = true;
+        extraPortals = [
+            pkgs.xdg-desktop-portal-gnome
+        ];
+        config = {
+            common = {
+                default = ["gnome"];
+            };
+        };
+  };
   services.udisks2.enable = true;
   # Docker
   virtualisation.docker = {
@@ -58,7 +71,7 @@
   };
 
   # Some basic Niri stuff
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
   hardware.graphics.enable = true;
 
   # Add shell (cant be done in just home manager)
@@ -135,7 +148,7 @@
       "video"
       "docker"
     ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
 
