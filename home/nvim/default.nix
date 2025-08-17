@@ -149,6 +149,10 @@
       which-key.enable = true;
       oil.enable = true;
       hardtime.enable = true;
+      orgmode = {
+                settings = {org_startup_folded = "showeverything";};
+                enable = true;
+            };
     };
 
   };

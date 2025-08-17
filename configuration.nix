@@ -28,6 +28,7 @@
       enable = true;
         extraPortals = [
             pkgs.xdg-desktop-portal-gnome
+            pkgs.xdg-desktop-portal-gtk
         ];
         config = {
             common = {
@@ -36,6 +37,7 @@
         };
   };
   services.udisks2.enable = true;
+  services.flatpak.enable = true;
   # Docker
   virtualisation.docker = {
     enable = true;
@@ -113,6 +115,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false; 
 
   # Set your time zone.
   time.timeZone = "America/New_York";

@@ -32,10 +32,13 @@
     pkgs.youtube-music
     pkgs.bruno
     pkgs.timer
-    pkgs.xfce.thunar
     pkgs.calibre
+    pkgs.bluej
+    pkgs.nautilus
+    pkgs.corefonts
   ];
   services.kdeconnect.enable = true;
+  services.syncthing.enable = true;
   services.mpris-proxy.enable = true;
   programs.chromium.enable = true;
   programs.zen-browser.enable = true;
@@ -62,11 +65,11 @@
                 package = pkgs.nerd-fonts.jetbrains-mono;
                 name = "JetBrainsMono Nerd Font";
             };
-            sansSerif = {
-                package = pkgs.roboto;
-                name = "Roboto";
-            };
-            serif = config.stylix.fonts.sansSerif;
+            # sansSerif = {
+            #     package = pkgs.roboto;
+            #     name = "Roboto";
+            # };
+            # serif = config.stylix.fonts.sansSerif;
             emoji = config.stylix.fonts.monospace;
         };
         cursor = {
